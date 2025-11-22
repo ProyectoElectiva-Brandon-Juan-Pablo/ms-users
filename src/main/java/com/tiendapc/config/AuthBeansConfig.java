@@ -1,5 +1,6 @@
 package com.tiendapc.config;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,4 +20,18 @@ public class AuthBeansConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
+
+
+    // IMPORTANTE: esto es SOLO temporal para obtener el hash en consola
+@Bean
+public CommandLineRunner printAdminPasswordHash(PasswordEncoder passwordEncoder) {
+    return args -> {
+        String raw = "admin123";
+        String encoded = passwordEncoder.encode(raw);
+        System.out.println("==== HASH PARA admin123 ====");
+        System.out.println(encoded);
+        System.out.println("==== FIN HASH ====");
+    };
+}
+
 }
